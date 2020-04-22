@@ -51,3 +51,19 @@ void MainWindow::on_archive_clicked()
         arcSettingsDialog->show();
     }
 }
+
+void MainWindow::on_unarchive_clicked()
+{
+    QStringList list;
+    foreach (const QModelIndex &index, ui->listView->selectionModel()->selectedIndexes()) {
+
+        if (!model->isDir(index)) {
+
+            list.append(model->filePath(index));
+        }
+    }
+    if (!list.isEmpty()) {
+        arcSettingsDialog->setSelectedItems(list);
+        arcSettingsDialog->decompress();
+    }
+}

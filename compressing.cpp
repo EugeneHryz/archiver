@@ -1,4 +1,4 @@
-#include "archive.h"
+#include "compressing.h"
 
 int* get_prefix_function(const char *string) {
 
@@ -133,7 +133,7 @@ bool check_string(const char* string, int length) {
     return true;
 }
 
-void archive_file(FILE *SRC, FILE *DST) {
+void compress_file(FILE *SRC, FILE *DST) {
 
     int rbuf_i, wbuf_i = 0, begin = 0, end = 0, word_length = 0, offset_length = 0;
 

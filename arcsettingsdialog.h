@@ -3,7 +3,8 @@
 #include <QDialog>
 #include <QComboBox>
 
-#include "archive.h"
+#include "compressing.h"
+#include "decompressing.h"
 
 namespace Ui {
 class ArcSettingsDialog;
@@ -20,6 +21,8 @@ public:
     QComboBox* getComboBox() const;
 
     void setSelectedItems(const QStringList &list);
+
+    void decompress();
 
 private slots:
     void on_add_clicked();

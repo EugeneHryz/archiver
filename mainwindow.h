@@ -27,6 +27,7 @@ private slots:
 
     void on_archive_clicked();
 
+    void on_unarchive_clicked();
 
 private:
     Ui::MainWindow *ui;

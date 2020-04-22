@@ -27,21 +27,39 @@ void ArcSettingsDialog::on_add_clicked()
 {
     foreach (const QString &fileName, selectedItems) {
 
-        //printf("%s\n%s\n", fileName.toLocal8Bit().constData(), ui->comboBox->itemText(0).toLocal8Bit().constData());
-
         FILE *sourceFile = NULL;
         fopen_s(&sourceFile, fileName.toLocal8Bit().constData(), "r");
 
-        FILE *arcFile = NULL;
-        fopen_s(&arcFile, (fileName.chopped(4) + ".lzh").toLocal8Bit().constData(), "w");
+        FILE *compressedFile = NULL;
+        fopen_s(&compressedFile, (fileName.chopped(4) + ".lzh").toLocal8Bit().constData(), "w");
 
-        archive_file(sourceFile, arcFile);
+        compress_file(sourceFile, compressedFile);
 
         fclose(sourceFile);
-        fclose(arcFile);
+        fclose(compressedFile);
     }
 
     this->hide();
+}
+
+void ArcSettingsDialog::decompress() {
+
+    if (!selectedItems.isEmpty()) {
+
+        foreach (const QString &fileName, selectedItems) {
+
+            FILE *compressedFile = NULL;
+            fopen_s(&compressedFile, fileName.toLocal8Bit().constData(), "r");
+
+            FILE *outFile = NULL;
+            fopen_s(&outFile, (fileName.chopped(4) + ".txt").toLocal8Bit().constData(), "w");
+
+            decompress_file(compressedFile, outFile);
+
+            fclose(compressedFile);
+            fclose(outFile);
+        }
+    }
 }
 
 void ArcSettingsDialog::on_cancel_clicked()
