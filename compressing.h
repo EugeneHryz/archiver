@@ -22,4 +22,4 @@ char* get_wrapped_string(const char *string, int length);
 
 bool check_string(const char* string, int length);
 
-void compress_file(FILE *SRC, FILE *DST);
+void compress_file(FILE *source_file, FILE *compressed_file);

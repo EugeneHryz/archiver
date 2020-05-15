@@ -2,16 +2,20 @@
 
 #include <QApplication>
 #include <QFileSystemModel>
-#include <QListView>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QFileSystemModel *model = new QFileSystemModel;
-    model->setRootPath("");
+    QFileSystemModel *fileSystemModel = new QFileSystemModel;
+    fileSystemModel->setRootPath("C:/");
+    fileSystemModel->setReadOnly(false);
 
-    MainWindow *mainWindow = new MainWindow(model);
+    QStringList list = QStringList();
+    StringListModel *stringListModel = new StringListModel(list);
+
+    MainWindow *mainWindow = new MainWindow(fileSystemModel, stringListModel);
+    mainWindow->setWindowTitle("Archiver");
 
     mainWindow->show();
     return a.exec();

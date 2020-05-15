@@ -133,7 +133,7 @@ bool check_string(const char* string, int length) {
     return true;
 }
 
-void compress_file(FILE *SRC, FILE *DST) {
+void compress_file(FILE *source_file, FILE *compressed_file) {
 
     int rbuf_i, wbuf_i = 0, begin = 0, end = 0, word_length = 0, offset_length = 0;
 
@@ -143,11 +143,11 @@ void compress_file(FILE *SRC, FILE *DST) {
 
     Code *code = NULL;
 
-    while (!feof(SRC)) {
+    while (!feof(source_file)) {
 
         rbuf_i = -1;
 
-        while (read_buffer_safe(SRC, read_buffer, &rbuf_i)) {
+        while (read_buffer_safe(source_file, read_buffer, &rbuf_i)) {
 
             code = get_next_code((const char*)read_buffer, begin, rbuf_i, end - rbuf_i);
 
@@ -181,12 +181,12 @@ void compress_file(FILE *SRC, FILE *DST) {
                 }
             }
 
-            write_buffer_safe(DST, write_buffer, &wbuf_i, (const char*)word, word_length);
+            write_buffer_safe(compressed_file, write_buffer, &wbuf_i, (const char*)word, word_length);
 
             set_pointers((const char*)read_buffer, &begin, &rbuf_i, &end, offset_length);
         }
     }
-    write_buffer_safe(DST, write_buffer, &wbuf_i, NULL, 0);
+    write_buffer_safe(compressed_file, write_buffer, &wbuf_i, NULL, 0);
 
     free(read_buffer);
     free(write_buffer);
